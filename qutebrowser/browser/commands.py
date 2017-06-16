@@ -176,7 +176,7 @@ class CommandDispatcher:
             prev: Force selecting the tab before the current tab.
             next_: Force selecting the tab after the current tab.
             opposite: Force selecting the tab in the opposite direction of
-                      what's configured in 'tabs->select-on-remove'.
+                      what's configured in 'tabs.select_on_remove'.
 
         Return:
             QTabBar.SelectLeftTab, QTabBar.SelectRightTab, or None if no change
@@ -195,7 +195,7 @@ class CommandDispatcher:
                 return QTabBar.SelectLeftTab
             elif conf_selection == QTabBar.SelectPreviousTab:
                 raise cmdexc.CommandError(
-                    "-o is not supported with 'tabs->select-on-remove' set to "
+                    "-o is not supported with 'tabs.select_on_remove' set to "
                     "'last-used'!")
             else:  # pragma: no cover
                 raise ValueError("Invalid select-on-remove value "
@@ -210,7 +210,7 @@ class CommandDispatcher:
             prev: Force selecting the tab before the current tab.
             next_: Force selecting the tab after the current tab.
             opposite: Force selecting the tab in the opposite direction of
-                      what's configured in 'tabs->select-on-remove'.
+                      what's configured in 'tabs.select_on_remove'.
             count: The tab index to close, or None
         """
         tabbar = self._tabbed_browser.tabBar()
@@ -248,7 +248,7 @@ class CommandDispatcher:
             prev: Force selecting the tab before the current tab.
             next_: Force selecting the tab after the current tab.
             opposite: Force selecting the tab in the opposite direction of
-                      what's configured in 'tabs->select-on-remove'.
+                      what's configured in 'tabs.select_on_remove'.
             force: Avoid confirmation for pinned tabs.
             count: The tab index to close, or None
         """
@@ -266,7 +266,7 @@ class CommandDispatcher:
     def tab_pin(self, count=None):
         """Pin/Unpin the current/[count]th tab.
 
-        Pinning a tab shrinks it to tabs->pinned-width size.
+        Pinning a tab shrinks it to `tabs.width.pinned` size.
         Attempting to close a pinned tab will cause a confirmation,
         unless --force is passed.
 
@@ -1518,7 +1518,7 @@ class CommandDispatcher:
             topic: The topic to show help for.
 
                    - :__command__ for commands.
-                   - __section__\->__option__ for settings.
+                   - __section__.__option__ for settings.
         """
         if topic is None:
             path = 'index.html'
@@ -1595,7 +1595,7 @@ class CommandDispatcher:
         """Open an external editor with the currently selected form field.
 
         The editor which should be launched can be configured via the
-        `general -> editor` config option.
+        `editor.command` config option.
         """
         tab = self._current_widget()
         tab.elements.find_focused(self._open_editor_cb)
@@ -2088,7 +2088,7 @@ class CommandDispatcher:
         """Navigate to a url formed in an external editor.
 
         The editor which should be launched can be configured via the
-        `general -> editor` config option.
+        `editor.command` config option.
 
         Args:
             url: URL to edit; defaults to the current page url.
